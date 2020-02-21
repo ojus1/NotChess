@@ -7,7 +7,7 @@ NotChess is a board game consiting of two phases:
 
 And can be played by Two or more players.
 
-For more than two players, `board_size` is recommended to be set >= 12 and `pool_size` >= 20, and `pool_size` should be divisible by number of players for fairer gameplay.
+For more than two players, `board_size` is recommended to be set >= 12 and `pool_size` >= 20, and `pool_size` should be divisible by number of players for fair gameplay.
 
 This Project will be used for Multi-agent Reinforcement Learning Algorithms.
 The nature of the game requires a good sense of long term planning in order to win consistently.
