@@ -1,9 +1,12 @@
 ## NotChess
 
 NotChess is a board game consiting of two phases:
+
 1. Drafting Phase
 2. "Chess" Phase
+
 And can be played by Two or more players.
+
 For more than two players, `board_size` is recommended to be set >= 12 and `pool_size` >= 20, and `pool_size` should be divisible by number of players for fairer gameplay.
 
 This Project will be used for Multi-agent Reinforcement Learning Algorithms.
@@ -25,7 +28,7 @@ This phase of a NotChess game is almost exactly same as the classic Chess, excep
 The last player with at least one piece left wins.
 
 ### Collaborations
-Open for Collaborations. Hit me up on `surya.oju@gmail.com`, open an Issue, or just connect with me on LinkedIn ['Surya Kant Sahu'](https://www.linkedin.com/in/surya-kant-oju/ "Surya Kant Sahu's LinkedIn")
+Open for Collaborations. Hit me up on `surya.oju@gmail.com`, open an Issue, or just connect with me on ['LinkedIn'](https://www.linkedin.com/in/surya-kant-oju/ "Surya Kant Sahu's LinkedIn")
 
 ### Author
 Surya Kant Sahu
