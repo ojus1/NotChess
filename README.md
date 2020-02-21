@@ -10,7 +10,7 @@ And can be played by Two or more players.
 For more than two players, `board_size` is recommended to be set >= 12 and `pool_size` >= 20, and `pool_size` should be divisible by number of players for fairer gameplay.
 
 This Project will be used for Multi-agent Reinforcement Learning Algorithms.
-The nature of the game requires a good sense of long term planning in order to win consitently.
+The nature of the game requires a good sense of long term planning in order to win consistently.
 
 NOTE: This game will not have any GUI support, and is meant only to be played by machine agents.
 
