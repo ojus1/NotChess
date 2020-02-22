@@ -1,6 +1,8 @@
 ## NotChess
 
-NotChess is a board game consiting of two phases:
+![NotChess](./assets/NotChess.PNG "NotChess")
+
+NotChess is a Python board game consiting of two phases:
 
 1. Drafting Phase
 2. "Chess" Phase
