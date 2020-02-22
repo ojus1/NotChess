@@ -50,7 +50,9 @@ class Board:
         self.turn_count = 0
         self.turn_cycle = cycle(range(self.num_players))
         self.inactive_pieces = []
-
+        self.winner = None
+        self.game_complete = False
+        
     def init_board(self):
         valid_positions = list(product(list(range(self.board_size)), list(range(self.board_size))))
         chosen_positions = list()
@@ -105,12 +107,15 @@ class Board:
         assert(self.phase == 2)
         t = next(self.turn_cycle)
         assert(t == player_id)
+        
+        old_p = self.board[old_pos[0]][old_pos[1]]
+        self.temp_valid_moves = old_p.get_valid_moves()
+        
         assert(target_pos in self.temp_valid_moves)        
         
         self.turn_count += 1
         
         target_tile = self.get_tile(target_pos)
-        old_p = self.board[old_pos[0]][old_pos[1]]
         
 
         if isinstance(target_tile, str):
@@ -123,7 +128,14 @@ class Board:
         self.active_pieces[i].position = target_pos
         self.board[target_pos[0]][target_pos[1]] = self.active_pieces[i]
         self.board[old_pos[0]][old_pos[1]] = "+"
-    
+        players_remain = set()
+        for item in self.active_pieces:
+            players_remain.add(item.owner)
+        if len(players_remain) == 1:
+            self.phase = 3
+            self.winner = next(iter(players_remain))
+            self.game_complete = True
+
     def get_valid_moves(self, pos):
         tile = self.board[pos[0]][pos[1]]
         assert(isinstance(tile, Piece))
