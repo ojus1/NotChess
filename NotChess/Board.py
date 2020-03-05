@@ -23,6 +23,11 @@ WEIGHTS = {
     'r': 0.11,
 }
 
+enum_PIECES = {'<empty>': 0}
+for i, item in enumerate(PIECES, 1):
+    enum_PIECES[item] = i
+
+
 #print(sum(WEIGHTS.values()))
 import random
 from itertools import product, cycle
@@ -144,6 +149,38 @@ class Board:
         self.temp_valid_moves = tile.get_valid_moves()
         return self.temp_valid_moves
     
+    def board_state(self, player=0):
+        rows = list()
+        for i in range(self.board_size):
+            row = list()
+            for j in range(self.board_size):
+                tile = self.board[i][j]
+                if isinstance(tile, str):
+                    piece_encoded = Board.one_hot(enum_PIECES['<empty>'], len(enum_PIECES))
+                    player_encoded = Board.one_hot(None, self.num_players) 
+                else:
+                    piece_encoded = Board.one_hot(enum_PIECES[tile.piece_type], len(enum_PIECES))
+                    player_encoded = Board.one_hot(tile.owner, self.num_players) 
+                player_encoded = Board.swap_player(player, player_encoded, p2=0)
+                tile_encoded = piece_encoded + player_encoded
+                row.append(tile_encoded)
+            rows.append(row)
+        return rows, self.game_complete
+
+    @staticmethod
+    def swap_player(p1, player_encoded, p2=0):
+        temp = player_encoded[p2]
+        player_encoded[p2] = player_encoded[1]
+        player_encoded[1] = temp
+        return player_encoded
+
+    @staticmethod
+    def one_hot(x, size):
+        temp = [0] * size
+        if x is not None:
+            temp[x] = 1
+        return temp
+
     #def insert_piece(self, piece, pos):
     @staticmethod
     def join(row1):
@@ -166,7 +203,4 @@ class Board:
 
 if __name__ == "__main__":
     board = Board()
-    for i in range(board.pool_size):
-        board.pick_piece(i, i % 2)
-    print(board)
-    
+    print(board.board_state())
