@@ -30,7 +30,7 @@ for i, item in enumerate(PIECES, 1):
 
 #print(sum(WEIGHTS.values()))
 import random
-from itertools import product, cycle
+from itertools import product
 from pprint import pprint, pformat
 from .Piece import Piece
 from copy import deepcopy
@@ -58,7 +58,6 @@ class Board:
         self.phase = 1
         self.num_players = num_players
         self.turn_count = 0
-        self.turn_cycle = cycle(range(self.num_players))
         self.inactive_pieces = []
         self.winner = None
         self.game_complete = False
@@ -104,29 +103,28 @@ class Board:
         return self.board[pos[0]][pos[1]].id
 
     def pick_piece(self, pos, player_id):
-        #print(player_id)
         assert(self.phase == 1)
+        assert(self.turn == player_id)
         global backup
         backup = deepcopy(self)
-        t = next(self.turn_cycle)
-        assert(t == player_id)
-        self.turn = t
+        self.turn += 1
+        if self.turn >= self.num_players:
+            self.turn = 0
         pid = self.pos_to_pid(pos)
         self.active_pieces[pid].owner = player_id
         self.turn_count += 1
         if self.turn_count == self.pool_size:
             self.phase = 2
-            self.turn_count = 0
-            self.turn = 0
-            self.turn_cycle = cycle(range(self.num_players))
         return 0
 
     def move_piece(self, old_pos, target_pos, player_id):
         assert(self.phase == 2)
+        assert(self.turn == player_id)
         global backup
         backup = deepcopy(self)
-        t = next(self.turn_cycle)
-        assert(t == player_id)
+        self.turn += 1
+        if self.turn >= self.num_players:
+            self.turn = 0
         
         old_p = self.board[old_pos[0]][old_pos[1]]
         self.temp_valid_moves = old_p.get_valid_moves()
