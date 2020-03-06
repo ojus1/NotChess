@@ -119,6 +119,7 @@ class Board:
             self.turn_count = 0
             self.turn = 0
             self.turn_cycle = cycle(range(self.num_players))
+        return 0
 
     def move_piece(self, old_pos, target_pos, player_id):
         assert(self.phase == 2)
@@ -154,7 +155,9 @@ class Board:
             self.phase = 3
             self.winner = next(iter(players_remain))
             self.game_complete = True
-
+            return 1
+        return 0
+        
     def get_valid_moves(self, pos):
         tile = self.board[pos[0]][pos[1]]
         assert(isinstance(tile, Piece))
