@@ -191,8 +191,7 @@ class Board:
             moves = list()
             for piece in self.active_pieces:
                 if piece.owner == None:
-                    moves_per_piece = [piece.position]
-                    moves += [(piece.position, item) for item in moves_per_piece]
+                    moves += [(piece.position, piece.position)]
             return moves
         else:
             return []
