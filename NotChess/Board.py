@@ -33,6 +33,7 @@ import random
 from itertools import product, cycle
 from pprint import pprint, pformat
 from .Piece import Piece
+from copy import deepcopy
 '''
 sample = lambda num_samples: random.choices(PIECES, list(WEIGHTS.values()), k=num_samples)
 
@@ -40,6 +41,10 @@ import matplotlib.pyplot as plt
 plt.hist(sample(10000))
 plt.show()
 '''
+backup = None
+
+def roll_back():
+    return backup
 
 class Board:
     def __init__(self, board_size=8, pool_size=12, num_players=2):
@@ -58,6 +63,9 @@ class Board:
         self.winner = None
         self.game_complete = False
         self.turn = 0
+        global backup
+        backup = deepcopy(self)
+        
     def init_board(self):
         valid_positions = list(product(list(range(self.board_size)), list(range(self.board_size))))
         chosen_positions = list()
@@ -98,6 +106,8 @@ class Board:
     def pick_piece(self, pos, player_id):
         #print(player_id)
         assert(self.phase == 1)
+        global backup
+        backup = deepcopy(self)
         t = next(self.turn_cycle)
         assert(t == player_id)
         self.turn = t
@@ -112,6 +122,8 @@ class Board:
 
     def move_piece(self, old_pos, target_pos, player_id):
         assert(self.phase == 2)
+        global backup
+        backup = deepcopy(self)
         t = next(self.turn_cycle)
         assert(t == player_id)
         
@@ -166,6 +178,10 @@ class Board:
                 row.append(tile_encoded)
             rows.append(row)
         return rows, self.game_complete
+
+    def all_valid_moves(self, player):
+        pass
+
 
     @staticmethod
     def swap_player(p1, player_encoded, p2=0):

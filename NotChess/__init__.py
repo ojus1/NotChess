@@ -1,2 +1,2 @@
-from .Board import Board, PIECES
+from .Board import Board, roll_back
 from .Piece import Piece
