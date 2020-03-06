@@ -180,13 +180,22 @@ class Board:
         return rows, self.game_complete
 
     def all_valid_moves(self, player):
-        moves = list()
-        for piece in self.active_pieces:
-            if piece.owner == player:
-                moves_per_piece = piece.get_valid_moves()
-                moves += [(piece.position, item) for item in moves_per_piece]
-        return moves
-    
+        if self.phase == 1:
+            moves = list()
+            for piece in self.active_pieces:
+                if piece.owner == player:
+                    moves_per_piece = piece.get_valid_moves()
+                    moves += [(piece.position, item) for item in moves_per_piece]
+            return moves
+        if self.phase == 2:
+            moves = list()
+            for piece in self.active_pieces:
+                if piece.owner == None:
+                    moves_per_piece = [piece.position]
+                    moves += [(piece.position, item) for item in moves_per_piece]
+            return moves
+        else:
+            return []
     @staticmethod
     def swap_player(p1, player_encoded, p2=0):
         temp = player_encoded[p2]
