@@ -157,7 +157,7 @@ class Board:
             self.game_complete = True
             return 1
         return 0
-        
+
     def get_valid_moves(self, pos):
         tile = self.board[pos[0]][pos[1]]
         assert(isinstance(tile, Piece))
@@ -183,14 +183,14 @@ class Board:
         return rows, self.game_complete
 
     def all_valid_moves(self, player):
-        if self.phase == 1:
+        if self.phase == 2:
             moves = list()
             for piece in self.active_pieces:
                 if piece.owner == player:
                     moves_per_piece = piece.get_valid_moves()
                     moves += [(piece.position, item) for item in moves_per_piece]
             return moves
-        if self.phase == 2:
+        if self.phase == 1:
             moves = list()
             for piece in self.active_pieces:
                 if piece.owner == None:
